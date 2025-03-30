@@ -15,7 +15,7 @@ jobs:
         env:
           MYSQL_ROOT_PASSWORD: 1234567890
           MYSQL_DATABASE: allnews
-          MYSQL_USER: myuser
+          MYSQL_USER: root
           MYSQL_PASSWORD: 1234567890
 
         ports:
