@@ -1,0 +1,44 @@
+name: Run All Crawlers Every 1 Hour
+
+on:
+  schedule:
+    - cron: '0 * * * *'  # 每 1 小時執行一次 (整點)
+  workflow_dispatch:  # 允許手動觸發
+
+jobs:
+  run_crawlers:
+    runs-on: ubuntu-latest
+
+    services:
+      mysql:
+        image: mysql:5.7
+        env:
+          MYSQL_ROOT_PASSWORD: 1234567890
+          MYSQL_DATABASE: allnews
+          MYSQL_USER: myuser
+          MYSQL_PASSWORD: 1234567890
+
+        ports:
+          - 3306:3306
+        options: --health-cmd="mysqladmin ping --host=localhost --user=root --password=rootpassword" --health-interval=10s --health-timeout=5s --health-retries=3
+
+
+    steps:
+      - name: 🔄 Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: 🐍 Set Up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: 📦 Install Dependencies
+        run: |
+          pip install -r requirements.txt
+
+      - name: 🕷 Run All Python Scripts in news_onehour
+        run: |
+          for script in news_onehour/*.py; do
+            echo "Running $script..."
+            python "$script"
+          done
