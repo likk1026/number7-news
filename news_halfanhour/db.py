@@ -8,7 +8,7 @@ This is a temporary script file.
 import mysql.connector
 
 conn = mysql.connector.connect(
-    host='localhost',
+    host='mysql',
     user = 'root',
     password = '1234567890',
     database = 'allnews',
