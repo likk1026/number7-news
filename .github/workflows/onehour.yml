@@ -35,7 +35,8 @@ jobs:
       - name: 📦 Install Dependencies
         run: |
           pip install -r requirements.txt
-
+      - name: Wait for MySQL to be ready
+        run: sleep 15
       - name: 🕷 Run All Python Scripts in news_onehour
         run: |
           for script in news_onehour/*.py; do
